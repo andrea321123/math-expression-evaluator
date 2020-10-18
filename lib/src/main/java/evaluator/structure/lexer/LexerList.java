@@ -28,7 +28,7 @@ public class LexerList {
     // public methods
     void doLexing(String inputString) {
         list = new LinkedList<>();
-
+        LinkedList <String> symbolsList = split(inputString);
         // TODO: implement doLexing method
 
         return;
@@ -36,7 +36,7 @@ public class LexerList {
 
     // private methods
     // creates a list of symbols from a string (symbols: 34, (, sin, +, ^, sqrt)
-    private LinkedList <String> split(String inputString) {
+    protected  LinkedList <String> split(String inputString) {
         LinkedList <String> returnList = new LinkedList<>();
 
         boolean finishedSymbol = true;  // flag if on the last iteration we inserted a symbol in the list
@@ -57,13 +57,14 @@ public class LexerList {
                                 currentString += newChar;
                             }
                             catch (IndexOutOfBoundsException e) {       // we reached end of string
-                                returnList.add(currentString);
                                 break;
                             }
                         }
                         // we have to remove last character (because it isn't a number)
                         currentString = currentString.substring(0, currentString.length() -1);
                         i--;
+
+                        returnList.add(currentString);      // we add the number
                     }
                     else
                         finishedSymbol = false;
