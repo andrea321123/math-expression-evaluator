@@ -9,11 +9,11 @@ import java.util.ArrayList;
  * Node with a bracket type won't be inserted in the ParserTree, and therefore
  * they can't return a value (but they throw an exception instead).
  * @author Andrea
- * @version 1.1
+ * @version 1.2
  */
 public abstract class Node {
     public Node parentNode;
-    public ArrayList<Node> childrenNodes;
+    public ArrayList<Node> childrenNodes = new ArrayList<>();
     protected NodeEnum type;
 
     public NodeEnum getType() {
