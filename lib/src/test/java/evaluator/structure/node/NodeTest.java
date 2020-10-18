@@ -2,16 +2,18 @@ package evaluator.structure.node;
 
 import evaluator.structure.node.enums.BinaryOperatorEnum;
 import evaluator.structure.node.enums.FunctionCallEnum;
+
 import org.junit.Test;
 
 /**
  * @author Andrea
- * @version 1.0
+ * @version 1.1
  */
 public class NodeTest {
     @Test public void testGetValue() {
         // we manually create an example of a tree using Node objects
         // expression: (3 + fact(4)) - sin(3^2 - 4) * sqrt(2)
+
         // creating nodes
         Node headNode = new BinaryOperator("-", BinaryOperatorEnum.SUBTRACTION);
         Node node1 = new BinaryOperator("+", BinaryOperatorEnum.ADDITION);
