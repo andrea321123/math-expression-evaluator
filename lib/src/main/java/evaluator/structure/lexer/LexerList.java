@@ -9,7 +9,7 @@ import java.util.LinkedList;
 /**
  * Converts an input string into a list of Nodes
  * @author Andrea
- * @version 1.4
+ * @version 1.5
  */
 public class LexerList {
     public LinkedList<Node> list;
@@ -36,7 +36,7 @@ public class LexerList {
 
     // private methods
     // creates a list of symbols from a string (symbols: 34, (, sin, +, ^, sqrt)
-    protected  LinkedList <String> split(String inputString) {
+    protected LinkedList <String> split(String inputString) {
         LinkedList <String> returnList = new LinkedList<>();
 
         boolean finishedSymbol = true;  // flag if on the last iteration we inserted a symbol in the list
@@ -85,6 +85,31 @@ public class LexerList {
             throw new IncorrectInputException();
 
         return returnList;
+    }
+
+    // check if brackets are placed in a valid way (es. "(()()(()()))") (wrong: "())(()", ")()()(()())(")
+    protected boolean checkBrackets(LinkedList <String> symbolList) {
+        LinkedList <String> bracketList = new LinkedList<>();       // made only by brackets
+
+        // we populate bracketList
+        for (int i = 0; i < symbolList.size(); i++)
+            if (symbolList.get(i) == "(" || symbolList.get(i) == ")")
+                bracketList.add(symbolList.get(i));
+
+        int bracketCounter = 0;     // +1 if "(", -1 if ")"
+        int i = 0;                  // index we will use to iterate through bracketList
+
+        // at the end bracketCounter should be 0
+        while(bracketCounter >= 0 && i++ < symbolList.size())
+            if (symbolList.get(i).equals("("))
+                bracketCounter++;
+            else            // must be ")"
+                bracketCounter--;
+
+        // check if bracketCounter is 0
+        if (bracketCounter == 0)
+            return true;
+        return false;
     }
 
     private boolean isNumber(String input) {
