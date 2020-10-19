@@ -9,7 +9,7 @@ import java.util.LinkedList;
 /**
  * Converts an input string into a list of Nodes
  * @author Andrea
- * @version 1.7
+ * @version 1.8
  */
 public class LexerList {
     public LinkedList<Node> list;
@@ -118,12 +118,12 @@ public class LexerList {
         for (int i = 0; i < symbolList.size(); i++) {
             String currentSymbol = symbolList.get(i);
             if (previousSymbol.equals("(") && currentSymbol.equals(")"))        // there's an empty bracket
-                return false;
+                return true;
             previousSymbol = currentSymbol;
         }
 
         // if no empty bracket found, return true
-        return true;
+        return false;
     }
 
     private boolean isNumber(String input) {

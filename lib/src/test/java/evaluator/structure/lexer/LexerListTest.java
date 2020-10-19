@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 /**
  * @author Andrea
- * @version 1.1
+ * @version 1.2
  */
 public class LexerListTest {
     @Test public void testSplit() {
@@ -37,5 +37,11 @@ public class LexerListTest {
         assertFalse(test.checkBrackets(test.split("())(()")));
         assertFalse(test.checkBrackets(test.split(")()()(()())(")));
 
+    }
+
+    @Test public void checkEmptyBracketsTest() {
+        LexerList test = new LexerList();
+        assertFalse(test.checkEmptyBrackets(test.split("43*(13-sqrt(4^2))")));
+        assertTrue(test.checkEmptyBrackets(test.split("43*()(13-sqrt(4^2))")));
     }
 }
