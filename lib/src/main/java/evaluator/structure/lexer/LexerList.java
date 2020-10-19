@@ -9,7 +9,7 @@ import java.util.LinkedList;
 /**
  * Converts an input string into a list of Nodes
  * @author Andrea
- * @version 1.5
+ * @version 1.6
  */
 public class LexerList {
     public LinkedList<Node> list;
@@ -93,15 +93,15 @@ public class LexerList {
 
         // we populate bracketList
         for (int i = 0; i < symbolList.size(); i++)
-            if (symbolList.get(i) == "(" || symbolList.get(i) == ")")
+            if (symbolList.get(i).equals("(") || symbolList.get(i).equals(")"))
                 bracketList.add(symbolList.get(i));
 
         int bracketCounter = 0;     // +1 if "(", -1 if ")"
         int i = 0;                  // index we will use to iterate through bracketList
 
         // at the end bracketCounter should be 0
-        while(bracketCounter >= 0 && i++ < symbolList.size())
-            if (symbolList.get(i).equals("("))
+        while(bracketCounter >= 0 && i < bracketList.size())
+            if (bracketList.get(i++).equals("("))
                 bracketCounter++;
             else            // must be ")"
                 bracketCounter--;

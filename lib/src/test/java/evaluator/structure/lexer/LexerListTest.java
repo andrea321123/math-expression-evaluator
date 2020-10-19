@@ -3,11 +3,11 @@ package evaluator.structure.lexer;
 import evaluator.structure.IncorrectInputException;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * @author Andrea
- * @version 1.0
+ * @version 1.1
  */
 public class LexerListTest {
     @Test public void testSplit() {
@@ -28,5 +28,14 @@ public class LexerListTest {
             assert(false);
         }
         catch (IncorrectInputException e) {}
+    }
+
+    @Test public void checkBracketsTest() {
+        LexerList test = new LexerList();
+        assertTrue(test.checkBrackets(test.split("43*(13-sqrt(4^2))")));
+        assertTrue(test.checkBrackets(test.split("(()()(()()))")));
+        assertFalse(test.checkBrackets(test.split("())(()")));
+        assertFalse(test.checkBrackets(test.split(")()()(()())(")));
+
     }
 }
