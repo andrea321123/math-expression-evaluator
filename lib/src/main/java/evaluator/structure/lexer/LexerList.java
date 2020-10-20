@@ -11,7 +11,7 @@ import java.util.LinkedList;
 /**
  * Converts an input string into a list of Nodes
  * @author Andrea
- * @version 1.9
+ * @version 1.10
  */
 public class LexerList {
     public LinkedList<Node> list;
@@ -44,7 +44,7 @@ public class LexerList {
             EnumDataClass enumDataClass = stringToEnum.get(symbol);
 
 
-            if (enumDataClass.getNodeEnum() == NodeEnum.NUMBER)
+            if (enumDataClass == null)        // it is a number
                 tmp = new Number(Double.parseDouble(symbol));
             else if (enumDataClass.getNodeEnum() == NodeEnum.OPEN_BRACKET)
                 tmp = new Bracket(NodeEnum.OPEN_BRACKET);

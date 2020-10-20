@@ -1,13 +1,14 @@
 package evaluator.structure.lexer;
 
 import evaluator.structure.IncorrectInputException;
+import evaluator.structure.node.enums.NodeEnum;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 /**
  * @author Andrea
- * @version 1.2
+ * @version 1.3
  */
 public class LexerListTest {
     @Test public void testSplit() {
@@ -43,5 +44,14 @@ public class LexerListTest {
         LexerList test = new LexerList();
         assertFalse(test.checkEmptyBrackets(test.split("43*(13-sqrt(4^2))")));
         assertTrue(test.checkEmptyBrackets(test.split("43*()(13-sqrt(4^2))")));
+    }
+
+    @Test public void testDoLexing() {
+        LexerList test = new LexerList();
+        test.doLexing("(45 * 4 - (tan(23) /2))");
+        assertEquals(14, test.list.size());
+        test.doLexing("43*(13-sqrt(4^2))");
+        assertEquals(12, test.list.size());
+        assertEquals(NodeEnum.CLOSE_BRACKET, test.list.get(10).getType());
     }
 }
