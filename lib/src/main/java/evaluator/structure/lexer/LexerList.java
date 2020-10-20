@@ -2,14 +2,16 @@ package evaluator.structure.lexer;
 
 import evaluator.structure.IncorrectInputException;
 
-import evaluator.structure.node.Node;
+import evaluator.structure.node.*;
+import evaluator.structure.node.Number;
+import evaluator.structure.node.enums.NodeEnum;
 
 import java.util.LinkedList;
 
 /**
  * Converts an input string into a list of Nodes
  * @author Andrea
- * @version 1.8
+ * @version 1.9
  */
 public class LexerList {
     public LinkedList<Node> list;
@@ -26,12 +28,35 @@ public class LexerList {
     // LexerList doesn't have a copy constructor because we use only one LexerList object
 
     // public methods
-    void doLexing(String inputString) {
+    public void doLexing(String inputString) {
         list = new LinkedList<>();
-        LinkedList <String> symbolsList = split(inputString);
-        // TODO: implement doLexing method
+        inputString = inputString.replaceAll(" ", "");
+        LinkedList <String> symbolList = split(inputString);
 
-        return;
+        // check for errors in input string
+        if (checkEmptyBrackets(symbolList) || !checkBrackets(symbolList))
+            throw new IncorrectInputException();
+
+        // now we associate to each symbol its type
+        for (int i = 0; i < symbolList.size(); i++) {
+            Node tmp = null;
+            String symbol = symbolList.get(i);
+            EnumDataClass enumDataClass = stringToEnum.get(symbol);
+
+
+            if (enumDataClass.getNodeEnum() == NodeEnum.NUMBER)
+                tmp = new Number(Double.parseDouble(symbol));
+            else if (enumDataClass.getNodeEnum() == NodeEnum.OPEN_BRACKET)
+                tmp = new Bracket(NodeEnum.OPEN_BRACKET);
+            else if (enumDataClass.getNodeEnum() == NodeEnum.CLOSE_BRACKET)
+                tmp = new Bracket(NodeEnum.CLOSE_BRACKET);
+            else if (enumDataClass.getNodeEnum() == NodeEnum.BINARY_OPERATOR)
+                tmp = new BinaryOperator(symbol, enumDataClass.getBinaryOperatorEnum());
+            else if (enumDataClass.getNodeEnum() == NodeEnum.FUNCTION_CALL)
+                tmp = new FunctionCall(symbol, enumDataClass.getFunctionCallEnum());
+
+            list.add(tmp);
+        }
     }
 
     // private methods
@@ -122,7 +147,7 @@ public class LexerList {
             previousSymbol = currentSymbol;
         }
 
-        // if no empty bracket found, return true
+        // if no empty bracket found, return false
         return false;
     }
 
