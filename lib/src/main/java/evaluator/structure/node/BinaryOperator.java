@@ -6,22 +6,22 @@ import evaluator.structure.node.enums.NodeEnum;
 /**
  * Represent a node containing a binary operator (such as addition)
  * @author Andrea
- * @version 1.1
+ * @version 1.2
  */
 public class BinaryOperator extends Operator {
     private final BinaryOperatorEnum binaryOperatorEnum;
 
-    BinaryOperator(String operator, BinaryOperatorEnum binaryOperatorEnum) {
+    public BinaryOperator(String operator, BinaryOperatorEnum binaryOperatorEnum) {
         super.operator = operator;
         this.binaryOperatorEnum = binaryOperatorEnum;
         type = NodeEnum.BINARY_OPERATOR;
     }
-    BinaryOperator() {
+    public BinaryOperator() {
         super.operator = "";
         binaryOperatorEnum = null;
         type = NodeEnum.BINARY_OPERATOR;
     }
-    BinaryOperator(BinaryOperator toCopy) {
+    public BinaryOperator(BinaryOperator toCopy) {
         super.operator = toCopy.operator;
         binaryOperatorEnum = toCopy.binaryOperatorEnum;
         type = toCopy.type;

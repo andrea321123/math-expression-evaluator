@@ -6,22 +6,22 @@ import evaluator.structure.node.enums.NodeEnum;
 /**
  * Represent a node containing a function call (such as sin, cos, sqrt).
  * @author Andrea
- * @version 1.1
+ * @version 1.2
  */
 public class FunctionCall extends Operator {
     private final FunctionCallEnum functionCallEnum;
 
-    FunctionCall(String operator, FunctionCallEnum functionCallEnum) {
+    public FunctionCall(String operator, FunctionCallEnum functionCallEnum) {
         super.operator = operator;
         this.functionCallEnum = functionCallEnum;
         type = NodeEnum.FUNCTION_CALL;
     }
-    FunctionCall() {
+    public FunctionCall() {
         super.operator = "";
         functionCallEnum = null;
         type = NodeEnum.FUNCTION_CALL;
     }
-    FunctionCall(FunctionCall toCopy) {
+    public FunctionCall(FunctionCall toCopy) {
         super.operator = toCopy.operator;
         functionCallEnum = toCopy.getFunctionCallEnum();
         type = toCopy.type;

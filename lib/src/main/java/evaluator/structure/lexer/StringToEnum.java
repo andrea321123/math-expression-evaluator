@@ -9,12 +9,12 @@ import java.util.HashMap;
 /**
  * Maps each symbol to a NodeEnum, and eventually, to a BinaryOperatorEnum or a FunctionCallEnum
  * @author Andrea
- * @version 1.0
+ * @version 1.1
  */
 public class StringToEnum {
     private HashMap <String, EnumDataClass> map;
 
-    StringToEnum() {
+    public StringToEnum() {
         map = new HashMap<>();
 
         // add every entry in map
