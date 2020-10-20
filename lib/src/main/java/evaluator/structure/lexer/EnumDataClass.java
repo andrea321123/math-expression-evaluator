@@ -9,7 +9,7 @@ import evaluator.structure.node.enums.NodeEnum;
 /**
  * Data class containing a nodeTypeEnum, binaryOperatorEnum, functionCallEnum
  * @author Andrea
- * @version 1.1
+ * @version 1.2
  */
 public class EnumDataClass {
     private NodeEnum nodeEnum;
@@ -51,7 +51,7 @@ public class EnumDataClass {
     public BinaryOperatorEnum getBinaryOperatorEnum() {
         return binaryOperatorEnum;
     }
-    public FunctionCallEnum functionCallEnum() {
+    public FunctionCallEnum getFunctionCallEnum() {
         return functionCallEnum;
     }
 }
