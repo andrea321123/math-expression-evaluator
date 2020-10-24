@@ -13,7 +13,7 @@ import java.util.LinkedList;
 /**
  * Parse a list of nodes into a tree of nodes that we can then evaluate
  * @author Andrea
- * @version 1.4
+ * @version 1.5
  */
 public class ParserTree {
     public LexerList lexer;
@@ -47,6 +47,8 @@ public class ParserTree {
         // split by + or -
         for (int i = 0; i < symbolList.size(); i++) {
             i = skipBrackets(symbolList, i);
+            if (i == symbolList.size())
+                break;
 
             if (symbolList.get(i).getType() == NodeEnum.BINARY_OPERATOR) {
                 BinaryOperator operator = (BinaryOperator)symbolList.get(i);
@@ -72,6 +74,8 @@ public class ParserTree {
         // split by * or /
         for (int i = 0; i < symbolList.size(); i++) {
             i = skipBrackets(symbolList, i);
+            if (i == symbolList.size())
+                break;
 
             if (symbolList.get(i).getType() == NodeEnum.BINARY_OPERATOR) {
                 BinaryOperator operator = (BinaryOperator)symbolList.get(i);
@@ -97,6 +101,8 @@ public class ParserTree {
         // split by any other binary operator
         for (int i = 0; i < symbolList.size(); i++) {
             i = skipBrackets(symbolList, i);
+            if (i == symbolList.size())
+                break;
 
             if (symbolList.get(i).getType() == NodeEnum.BINARY_OPERATOR) {
                 returnNode = (BinaryOperator)symbolList.get(i);
@@ -118,6 +124,8 @@ public class ParserTree {
         // split by a function call
         for (int i = 0; i < symbolList.size(); i++) {
             i = skipBrackets(symbolList, i);
+            if (i == symbolList.size())
+                break;
 
             if (symbolList.get(i).getType() == NodeEnum.FUNCTION_CALL) {
                 FunctionCall functionCall = (FunctionCall)symbolList.get(i);
@@ -140,9 +148,19 @@ public class ParserTree {
         if (symbolList.get(index).getType() != NodeEnum.OPEN_BRACKET)
             return index;
 
-        // we skip all nodes until we found a close bracket
-        while (symbolList.get(index).getType() != NodeEnum.CLOSE_BRACKET)
-            index++;
+        int bracketCounter = 0;
+
+        // we skip all nodes until we found the corresponding close bracket
+        do {
+            NodeEnum nodeType = symbolList.get(index++).getType();
+
+            // update bracket counter
+            if (nodeType == NodeEnum.OPEN_BRACKET)
+                bracketCounter++;
+            else if (nodeType == NodeEnum.CLOSE_BRACKET)
+                bracketCounter--;
+        }
+        while (bracketCounter != 0);
 
         // we reached a close bracket
         return index;
