@@ -6,7 +6,7 @@ import evaluator.structure.node.enums.NodeEnum;
 /**
  * Represent a node containing a binary operator (such as addition)
  * @author Andrea
- * @version 1.2
+ * @version 1.3
  */
 public class BinaryOperator extends Operator {
     private final BinaryOperatorEnum binaryOperatorEnum;
@@ -38,13 +38,20 @@ public class BinaryOperator extends Operator {
         double secondValue = childrenNodes.get(1).getValue();
 
         // we apply the desired operation on the operators
-        return switch (binaryOperatorEnum) {
-            case ADDITION -> firstValue + secondValue;
-            case SUBTRACTION -> firstValue - secondValue;
-            case MULTIPLICATION -> firstValue * secondValue;
-            case DIVISION -> firstValue / secondValue;
-            case POW -> Math.pow(firstValue, secondValue);
-        };
+        switch (binaryOperatorEnum) {
+            case ADDITION:
+                return firstValue + secondValue;
+            case SUBTRACTION:
+                return firstValue - secondValue;
+            case MULTIPLICATION:
+                return firstValue * secondValue;
+            case DIVISION:
+                return firstValue / secondValue;
+            case POW:
+                return Math.pow(firstValue, secondValue);
+            default:
+                return 0;
+        }
     }
 
     @Override

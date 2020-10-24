@@ -6,7 +6,7 @@ import evaluator.structure.node.enums.NodeEnum;
 /**
  * Represent a node containing a function call (such as sin, cos, sqrt).
  * @author Andrea
- * @version 1.2
+ * @version 1.3
  */
 public class FunctionCall extends Operator {
     private final FunctionCallEnum functionCallEnum;
@@ -37,13 +37,20 @@ public class FunctionCall extends Operator {
         double value = childrenNodes.get(0).getValue();
 
         // we apply the desired operation on the operators
-        return switch (functionCallEnum) {
-            case COS -> Math.cos(value);
-            case SIN -> Math.sin(value);
-            case TAN -> Math.tan(value);
-            case SQRT -> Math.sqrt(value);
-            case FACTORIAL -> FunctionCall.factorial((long)value);
-        };
+        switch (functionCallEnum) {
+            case COS:
+                return Math.cos(value);
+            case SIN:
+                return Math.sin(value);
+            case TAN:
+                return Math.tan(value);
+            case SQRT:
+                return Math.sqrt(value);
+            case FACTORIAL:
+                return factorial((long)value);
+            default:
+                return 0;
+        }
     }
 
     @Override
