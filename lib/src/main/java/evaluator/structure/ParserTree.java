@@ -13,7 +13,7 @@ import java.util.LinkedList;
 /**
  * Parse a list of nodes into a tree of nodes that we can then evaluate
  * @author Andrea
- * @version 1.3
+ * @version 1.4
  */
 public class ParserTree {
     public LexerList lexer;
@@ -99,21 +99,17 @@ public class ParserTree {
             i = skipBrackets(symbolList, i);
 
             if (symbolList.get(i).getType() == NodeEnum.BINARY_OPERATOR) {
-                BinaryOperator operator = (BinaryOperator)symbolList.get(i);
-                if (operator.getBinaryOperatorEnum() == BinaryOperatorEnum.MULTIPLICATION ||
-                        operator.getBinaryOperatorEnum() == BinaryOperatorEnum.DIVISION) {
-                    returnNode = operator;
+                returnNode = (BinaryOperator)symbolList.get(i);
 
-                    // left children
-                    returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(0, i))));
-                    returnNode.childrenNodes.get(0).parentNode = returnNode;
+                // left children
+                returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(0, i))));
+                returnNode.childrenNodes.get(0).parentNode = returnNode;
 
-                    // right children
-                    returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(i +1, symbolList.size()))));
-                    returnNode.childrenNodes.get(1).parentNode = returnNode;
+                // right children
+                returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(i +1, symbolList.size()))));
+                returnNode.childrenNodes.get(1).parentNode = returnNode;
 
-                    break;
-                }
+                break;
             }
         }
         if (returnNode != null)
