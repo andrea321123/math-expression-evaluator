@@ -11,18 +11,18 @@ import java.util.LinkedList;
 /**
  * Converts an input string into a list of Nodes
  * @author Andrea
- * @version 1.10
+ * @version 1.11
  */
 public class LexerList {
     public LinkedList<Node> list;
     public String inputString;
     public StringToEnum stringToEnum = new StringToEnum();
 
-    LexerList(String string) {
+    public LexerList(String string) {
         inputString = string;
         doLexing(string);
     }
-    LexerList() {
+    public LexerList() {
         inputString = "";
     }
     // LexerList doesn't have a copy constructor because we use only one LexerList object
