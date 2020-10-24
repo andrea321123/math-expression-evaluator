@@ -11,8 +11,9 @@ import evaluator.structure.node.enums.NodeEnum;
 import java.util.LinkedList;
 
 /**
+ * Parse a list of nodes into a tree of nodes that we can then evaluate
  * @author Andrea
- * @version 1.2
+ * @version 1.3
  */
 public class ParserTree {
     public LexerList lexer;
@@ -26,6 +27,10 @@ public class ParserTree {
         lexer = new LexerList();
     }
     // ParserTree will not have a copy constructor because we use only one ParserTree
+
+    public double getValue() {
+        return syntaxTree.getValue();
+    }
 
     public void doParsing(LinkedList <Node> symbolList) {
         syntaxTree = split(symbolList);
