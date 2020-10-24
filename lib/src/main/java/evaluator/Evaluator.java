@@ -9,7 +9,7 @@ import evaluator.structure.node.enums.NodeEnum;
 /**
  * Exposes methods to solve an expression and to visualize the syntax tree
  * @author Andrea
- * @version 1.0
+ * @version 1.1
  */
 public class Evaluator {
     ParserTree parser;
@@ -25,10 +25,17 @@ public class Evaluator {
      * Evaluates the string in input and returns a result
      * @param input Expression to evaluate
      * @return Result of the expression
+     * @throws InputErrorException thrown if the input is not valid
      */
     public double solve(String input) {
-        parser.lexer.doLexing(input);
-        parser.doParsing(parser.lexer.list);
+        try {
+            parser.lexer.doLexing(input);
+            parser.doParsing(parser.lexer.list);
+        }
+        catch (Exception e) {
+            throw new InputErrorException();
+        }
+
         return parser.getValue();
     }
 
