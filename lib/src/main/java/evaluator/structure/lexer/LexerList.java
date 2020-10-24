@@ -11,7 +11,7 @@ import java.util.LinkedList;
 /**
  * Converts an input string into a list of Nodes
  * @author Andrea
- * @version 1.11
+ * @version 1.12
  */
 public class LexerList {
     public LinkedList<Node> list;
@@ -82,6 +82,7 @@ public class LexerList {
                                 currentString += newChar;
                             }
                             catch (IndexOutOfBoundsException e) {       // we reached end of string
+                                currentString += " ";       // because we will remove last character
                                 break;
                             }
                         }

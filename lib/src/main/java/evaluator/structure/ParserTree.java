@@ -12,7 +12,7 @@ import java.util.LinkedList;
 
 /**
  * @author Andrea
- * @version 1.1
+ * @version 1.2
  */
 public class ParserTree {
     public LexerList lexer;
@@ -50,11 +50,11 @@ public class ParserTree {
                     returnNode = operator;
 
                     // left children
-                    returnNode.childrenNodes.add(split((LinkedList)symbolList.subList(0, i)));
+                    returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(0, i))));
                     returnNode.childrenNodes.get(0).parentNode = returnNode;
 
                     // right children
-                    returnNode.childrenNodes.add(split((LinkedList)symbolList.subList(i +1, symbolList.size())));
+                    returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(i +1, symbolList.size()))));
                     returnNode.childrenNodes.get(1).parentNode = returnNode;
 
                     break;
@@ -75,11 +75,11 @@ public class ParserTree {
                     returnNode = operator;
 
                     // left children
-                    returnNode.childrenNodes.add(split((LinkedList)symbolList.subList(0, i)));
+                    returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(0, i))));
                     returnNode.childrenNodes.get(0).parentNode = returnNode;
 
                     // right children
-                    returnNode.childrenNodes.add(split((LinkedList)symbolList.subList(i +1, symbolList.size())));
+                    returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(i +1, symbolList.size()))));
                     returnNode.childrenNodes.get(1).parentNode = returnNode;
 
                     break;
@@ -100,11 +100,11 @@ public class ParserTree {
                     returnNode = operator;
 
                     // left children
-                    returnNode.childrenNodes.add(split((LinkedList)symbolList.subList(0, i)));
+                    returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(0, i))));
                     returnNode.childrenNodes.get(0).parentNode = returnNode;
 
                     // right children
-                    returnNode.childrenNodes.add(split((LinkedList)symbolList.subList(i +1, symbolList.size())));
+                    returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(i +1, symbolList.size()))));
                     returnNode.childrenNodes.get(1).parentNode = returnNode;
 
                     break;
@@ -121,7 +121,7 @@ public class ParserTree {
             if (symbolList.get(i).getType() == NodeEnum.FUNCTION_CALL) {
                 FunctionCall functionCall = (FunctionCall)symbolList.get(i);
                 returnNode = functionCall;
-                returnNode.childrenNodes.add(split((LinkedList)symbolList.subList(i +1, symbolList.size())));
+                returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(i +1, symbolList.size()))));
                 returnNode.childrenNodes.get(0).parentNode = returnNode;
             }
         }
@@ -130,7 +130,7 @@ public class ParserTree {
 
         // if there aren't operators and it is a single value we must have an expression between brackets
         // we must then remove the external symbols (the brackets)
-        return split((LinkedList)symbolList.subList(1, symbolList.size() -1));
+        return split(new LinkedList<>(symbolList.subList(1, symbolList.size() -1)));
     }
 
     // returns the index that skips brackets from the starting index
@@ -144,6 +144,6 @@ public class ParserTree {
             index++;
 
         // we reached a close bracket
-        return index +1;
+        return index;
     }
 }
