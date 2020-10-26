@@ -9,7 +9,7 @@ import java.util.HashMap;
 /**
  * Maps each symbol to a NodeEnum, and eventually, to a BinaryOperatorEnum or a FunctionCallEnum
  * @author Andrea
- * @version 1.1
+ * @version 1.2
  */
 public class StringToEnum {
     private HashMap <String, EnumDataClass> map;
@@ -34,6 +34,8 @@ public class StringToEnum {
         map.put("tan", new EnumDataClass(FunctionCallEnum.TAN));
         map.put("fact", new EnumDataClass(FunctionCallEnum.FACTORIAL));
         map.put("sqrt", new EnumDataClass(FunctionCallEnum.SQRT));
+        map.put("log", new EnumDataClass(FunctionCallEnum.LOG));
+        map.put("ln", new EnumDataClass(FunctionCallEnum.LN));
     }
 
     public EnumDataClass get(String string) {

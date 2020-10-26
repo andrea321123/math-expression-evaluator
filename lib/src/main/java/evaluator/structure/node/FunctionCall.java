@@ -6,7 +6,7 @@ import evaluator.structure.node.enums.NodeEnum;
 /**
  * Represent a node containing a function call (such as sin, cos, sqrt).
  * @author Andrea
- * @version 1.3
+ * @version 1.4
  */
 public class FunctionCall extends Operator {
     private final FunctionCallEnum functionCallEnum;
@@ -48,6 +48,10 @@ public class FunctionCall extends Operator {
                 return Math.sqrt(value);
             case FACTORIAL:
                 return factorial((long)value);
+            case LOG:
+                return Math.log10(value);
+            case LN:
+                return Math.log(value);
             default:
                 return 0;
         }
