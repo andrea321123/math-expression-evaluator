@@ -13,7 +13,7 @@ import java.util.LinkedList;
 /**
  * Parse a list of nodes into a tree of nodes that we can then evaluate
  * @author Andrea
- * @version 1.5
+ * @version 1.6
  */
 public class ParserTree {
     public LexerList lexer;
@@ -49,21 +49,11 @@ public class ParserTree {
             i = skipBrackets(symbolList, i);
             if (i == symbolList.size())
                 break;
-
-            if (symbolList.get(i).getType() == NodeEnum.BINARY_OPERATOR) {
-                BinaryOperator operator = (BinaryOperator)symbolList.get(i);
-                if (operator.getBinaryOperatorEnum() == BinaryOperatorEnum.ADDITION ||
-                    operator.getBinaryOperatorEnum() == BinaryOperatorEnum.SUBTRACTION) {
-                    returnNode = operator;
-
-                    // left children
-                    returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(0, i))));
-                    returnNode.childrenNodes.get(0).parentNode = returnNode;
-
-                    // right children
-                    returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(i +1, symbolList.size()))));
-                    returnNode.childrenNodes.get(1).parentNode = returnNode;
-
+            if (checkNodeType(NodeEnum.BINARY_OPERATOR, symbolList.get(i))) {
+                Node operator = symbolList.get(i);
+                if (checkBinaryOperator(BinaryOperatorEnum.ADDITION, operator) ||
+                    checkBinaryOperator(BinaryOperatorEnum.SUBTRACTION, operator)) {
+                    returnNode = splitBinaryOperator(operator, symbolList, i);
                     break;
                 }
             }
@@ -76,21 +66,11 @@ public class ParserTree {
             i = skipBrackets(symbolList, i);
             if (i == symbolList.size())
                 break;
-
-            if (symbolList.get(i).getType() == NodeEnum.BINARY_OPERATOR) {
-                BinaryOperator operator = (BinaryOperator)symbolList.get(i);
-                if (operator.getBinaryOperatorEnum() == BinaryOperatorEnum.MULTIPLICATION ||
-                        operator.getBinaryOperatorEnum() == BinaryOperatorEnum.DIVISION) {
-                    returnNode = operator;
-
-                    // left children
-                    returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(0, i))));
-                    returnNode.childrenNodes.get(0).parentNode = returnNode;
-
-                    // right children
-                    returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(i +1, symbolList.size()))));
-                    returnNode.childrenNodes.get(1).parentNode = returnNode;
-
+            if (checkNodeType(NodeEnum.BINARY_OPERATOR, symbolList.get(i))) {
+                Node operator = symbolList.get(i);
+                if (checkBinaryOperator(BinaryOperatorEnum.MULTIPLICATION, operator) ||
+                    checkBinaryOperator(BinaryOperatorEnum.DIVISION, operator)) {
+                    returnNode = splitBinaryOperator(operator, symbolList, i);
                     break;
                 }
             }
@@ -103,18 +83,9 @@ public class ParserTree {
             i = skipBrackets(symbolList, i);
             if (i == symbolList.size())
                 break;
-
-            if (symbolList.get(i).getType() == NodeEnum.BINARY_OPERATOR) {
-                returnNode = (BinaryOperator)symbolList.get(i);
-
-                // left children
-                returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(0, i))));
-                returnNode.childrenNodes.get(0).parentNode = returnNode;
-
-                // right children
-                returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(i +1, symbolList.size()))));
-                returnNode.childrenNodes.get(1).parentNode = returnNode;
-
+            if (checkNodeType(NodeEnum.BINARY_OPERATOR, symbolList.get(i))) {
+                Node operator = symbolList.get(i);
+                returnNode = splitBinaryOperator(operator, symbolList, i);
                 break;
             }
         }
@@ -140,6 +111,29 @@ public class ParserTree {
         // if there aren't operators and it is a single value we must have an expression between brackets
         // we must then remove the external symbols (the brackets)
         return split(new LinkedList<>(symbolList.subList(1, symbolList.size() -1)));
+    }
+
+    private boolean checkNodeType(NodeEnum expected, Node node) {
+        if (node.getType() == expected)
+            return true;
+        return false;
+    }
+    private boolean checkBinaryOperator(BinaryOperatorEnum expected, Node node) {
+        BinaryOperator castNode = (BinaryOperator)node;
+        if (castNode.getBinaryOperatorEnum() == expected)
+            return true;
+        return false;
+    }
+    private Node splitBinaryOperator(Node returnNode, LinkedList <Node> symbolList, int operatorIndex) {
+        // left children
+        returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(0, operatorIndex))));
+        returnNode.childrenNodes.get(0).parentNode = returnNode;
+
+        // right children
+        returnNode.childrenNodes.add(split(new LinkedList<>(symbolList.subList(operatorIndex +1, symbolList.size()))));
+        returnNode.childrenNodes.get(1).parentNode = returnNode;
+
+        return returnNode;
     }
 
     // returns the index that skips brackets from the starting index
