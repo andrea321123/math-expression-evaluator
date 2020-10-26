@@ -11,7 +11,7 @@ import java.util.LinkedList;
 /**
  * Converts an input string into a list of Nodes
  * @author Andrea
- * @version 1.12
+ * @version 1.13
  */
 public class LexerList {
     public LinkedList<Node> list;
@@ -68,15 +68,29 @@ public class LexerList {
         String currentString = "";      // current string we are evaluating
         // we read each single char of the input string
         for (int i = 0; i < inputString.length(); i++) {
+            boolean negativeNumber = false;
+
             if (finishedSymbol) {
                 currentString = Character.toString(inputString.charAt(i));
 
-                if (stringToEnum.get(currentString) != null)
+                if (stringToEnum.get(currentString) != null && !currentString.equals("-"))
                     returnList.add(currentString);
                 else {
+                    if (currentString.equals("-")) {
+                        // check if - is part of a number or it is an operation
+                        if (returnList.size() == 0)     // first char
+                            negativeNumber = true;
+                        else if (returnList.get(returnList.size() -1) == "(")
+                            negativeNumber = true;
+                        else {      // it's an operation
+                            returnList.add(currentString);
+                            continue;
+                        }
+                    }
                     // we must check if it is the beginning of a number
-                    if (isNumber(currentString)) {
-                        while (isNumber(currentString)) {
+                    if (isNumber(currentString) || negativeNumber) {
+                        while (isNumber(currentString) || negativeNumber) {
+                            negativeNumber = false;
                             try {
                                 String newChar = Character.toString(inputString.charAt(++i));
                                 currentString += newChar;
