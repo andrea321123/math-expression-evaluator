@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 /**
  * @author Andrea
- * @version 1.3
+ * @version 1.5
  */
 public class LexerListTest {
     @Test public void testSplit() {
@@ -16,6 +16,7 @@ public class LexerListTest {
         assertEquals(12, test.split("43*(13-sqrt(4^2))").size());
         assertEquals(3, test.split("3+1").size());
         assertEquals(10, test.split("984.43*(14-tan(2))").size());
+        assertEquals(14, test.split("-34*8-43*(-6+tan(34))").size());
 
         // invalid input
         try {

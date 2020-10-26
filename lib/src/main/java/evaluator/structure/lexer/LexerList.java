@@ -11,7 +11,7 @@ import java.util.LinkedList;
 /**
  * Converts an input string into a list of Nodes
  * @author Andrea
- * @version 1.13
+ * @version 1.14
  */
 public class LexerList {
     public LinkedList<Node> list;
@@ -80,7 +80,7 @@ public class LexerList {
                         // check if - is part of a number or it is an operation
                         if (returnList.size() == 0)     // first char
                             negativeNumber = true;
-                        else if (returnList.get(returnList.size() -1) == "(")
+                        else if (returnList.get(returnList.size() -1).equals("("))
                             negativeNumber = true;
                         else {      // it's an operation
                             returnList.add(currentString);
