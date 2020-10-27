@@ -33,7 +33,7 @@ It supports the following operations:
 <!-- GETTING STARTED -->
 ## Getting Started
 
-If you just need the library and don't want follow the build process, go to the release page.
+If you just need the library and don't want follow the build process, go to the <a href="https://github.com/andrea321123/math-expression-evaluator/releases">release</a> page.
 To build the library from source follow these steps.
 
 ### Prerequisites
