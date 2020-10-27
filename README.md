@@ -1,5 +1,3 @@
-
-<br />
 <p align="center">
   <h2>math-expression-evaluator</h2>
   <p>
