@@ -70,5 +70,5 @@ val a = evaluator.solve("3+4*sqrt((96/2)+4^2)")   // a: 35.0
 ```Java
 import evaluator.Evaluator
 
-double a = new Evaluator.solve("3+4*sqrt((96/2)+4^2)");  // a: 35.0
+double a = new Evaluator().solve("3+4*sqrt((96/2)+4^2)");  // a: 35.0
 ```
